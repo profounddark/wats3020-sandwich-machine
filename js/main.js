@@ -45,7 +45,7 @@ let subtotal = prices["sandwich"] + meatCost + toppingCost + condimentCost;
 let waStateTaxRate = 0.101;
 let orderTax = (subtotal * waStateTaxRate);
 
-// THE FINAL MATH
+// THE EXTRA MATH
 let totalPrice = subtotal + orderTax;
 let suggestedTipLow = subtotal * 0.10;
 let suggestedTipMed = subtotal * 0.15;

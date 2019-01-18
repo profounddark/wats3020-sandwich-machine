@@ -30,6 +30,7 @@
 
 .text-center
 {
+    margin-top: 0; padding-top: 0;
     text-align: center;
 }
 
