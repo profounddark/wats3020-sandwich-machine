@@ -4,7 +4,7 @@
     background: url('../images/paper.jpg') repeat top center;
     width: 300px;
     min-height: 300px;
-    padding: 1rem 1rem 2rem 1rem;
+    padding: 1rem 1rem 1rem 1rem;
     font-family: Courier, monospace;
     color: #666;
     font-size: 0.8rem;
@@ -26,4 +26,16 @@
 
 .text-right {
     text-align: right;
+}
+
+.text-center
+{
+    text-align: center;
+}
+
+.tip-flex
+{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
 }

@@ -1,32 +1,14 @@
-/* JavaScript for WATS 3020 Sandwich Machine Assignment */
+// this is just so I can use .map later. this function is dumb.
+function trimThat(elem)
+{
+    return elem.trim();
+}
 
-// Step One ///////////////////////////////////////////////////////////
-//
-// Gather data from the user using the prompt() command.
-// Users will fill in each prompt with text.
-// Provide examples where it may help (e.g. show a comma-separated list of
-// toppings to indicate how to specify toppings, etc.)
-//
-// TODO: Prompt the user for what kind of bread they would like.
-// Ideally, that would look something like: "What kind of bread (white, wheat, flat)?"
-
-
-
-// TODO: Prompt the user for what kind of meat(s) they would like.
-// Indicate they should separate multiple items with a comma:
-// "What kind of meat? (Separate meats with a comma if you would like more than one.)"
-
-
-
-// TODO: Prompt the user for what kind of toppings they would like.
-// We expect this to be multiple, so ask them to provide you with a
-// comma-separated list using a user friendly prompt.
-
-
-
-// TODO: Prompt the user for what kind of condiments they would like.
-// Again, we should expect a comma-separated list if items here.
-
+// Prompts for all of the input. Prompts are obnoxious.
+let stringBread = prompt('What kind of bread (white, wheat, flat)?', 'italian');
+let stringMeat = prompt('What kind of meat? (Separate meats with a comma if you would like more than one.', 'roast beef, turkey breast');
+let stringToppings = prompt('What toppings would you like? (Separate multiple toppings with a comma.)', 'pepper jack, lettuce, tomatoes');
+let stringCondiments = prompt('What condiments would you like? (Separate multiple condiments with a comma.)', 'mustard, oil, vinegar');
 
 
 // Step Two ////////////////////////////////////////////////////////////
@@ -43,30 +25,31 @@ let prices = {
     condiment: 0.25 // Each condiment costs $0.25
 };
 
-// TODO: Convert order information from Strings to Arrays.
+// do the splits; also, trim any leading and following white space with map. It's kind of silly.
+let meatArray = (stringMeat.split(','));
+meatArray = meatArray.map(trimThat);
+let toppingArray = (stringToppings.split(','));
+toppingArray = toppingArray.map(trimThat);
+let condimentArray = stringCondiments.split(',');
+condimentArray = condimentArray.map(trimThat);
 
-let meatArray = null;
-let toppingArray = null;
-let condimentArray = null;
+// DO MATH
+let meatCost = meatArray.length * prices["meat"];
+let toppingCost = toppingArray.length * prices["topping"];
+let condimentCost = condimentArray.length * prices["condiment"];
 
-// TODO: Calculate cost for meat, toppings, and condiments.
-// This requires you to determine the length of each Array you just made
-// and multiply out the costs. You will need to refer to the attributes of the
-// `prices` object in order to calculate these costs.
+// DO MORE MATH
+let subtotal = prices["sandwich"] + meatCost + toppingCost + condimentCost;
 
-let meatCost = null;
-let toppingCost = null;
-let condimentCost = null;
+// DO FANCIER MATH
+let waStateTaxRate = 0.101;
+let orderTax = (subtotal * waStateTaxRate);
 
-// TODO: Combine the costs of each part of the sandwich to get the subtotal.
-let subtotal = null;
-
-// TODO: Calculate the tax owed using the waStateTaxRate.
-let waStateTaxRate = 0.065;
-let orderTax = null;
-
-// TODO: Calculate `totalPrice` by adding `subtotal` and `orderTax`.
-let totalPrice = null;
+// THE FINAL MATH
+let totalPrice = subtotal + orderTax;
+let suggestedTipLow = subtotal * 0.10;
+let suggestedTipMed = subtotal * 0.15;
+let suggestedTipHigh = subtotal * 0.20;
 
 
 // Step Three //////////////////////////////////////////////////////////
@@ -78,20 +61,26 @@ let totalPrice = null;
 
 let receiptTemplate = `
     <p>SANDWICH ORDER</p>
-    <p>Bread: wheat</p>
-    <p>Meat: ham, turkey</p>
-    <p>Toppings: lettuce, tomato, peppers, spinach</p>
-    <p>Condiments: mayo, mustard, thousand island</p>
+    <p>Bread: ${stringBread}</p>
+    <p>Meat: ${meatArray.join(', ')}</p>
+    <p>Toppings: ${toppingArray.join(', ')}</p>
+    <p>Condiments: ${condimentArray.join(', ')}</p>
     <p>---------------------</p>
-    <p class="text-right">Sandwich: $4.42</p>
-    <p class="text-right">Meat: $2.00</p>
-    <p class="text-right">Toppings: $2.00</p>
-    <p class="text-right">Condiments: $1.42</p>
+    <p class="text-right">Sandwich: $${(prices["sandwich"]).toFixed(2)}</p>
+    <p class="text-right">Meat: $${meatCost.toFixed(2)}</p>
+    <p class="text-right">Toppings: $${toppingCost.toFixed(2)}</p>
+    <p class="text-right">Condiments: $${condimentCost.toFixed(2)}</p>
     <p class="text-right">--------</p>
-    <p class="text-right">Subtotal: $9.84</p>
-    <p class="text-right">Tax: $1.42</p>
+    <p class="text-right">Subtotal: $${subtotal.toFixed(2)}</p>
+    <p class="text-right">Tax: $${orderTax.toFixed(2)}</p>
     <p class="text-right">--------</p>
-    <p class="text-right">Total: $4.84</p>
+    <p class="text-right">Total: $${totalPrice.toFixed(2)}</p>
+    <h1>Suggested Tips</h1>
+    <div class="tip-flex">
+        <p class="text-center">10%<br>$${suggestedTipLow.toFixed(2)}</p>
+        <p class="text-center">15%<br>$${suggestedTipMed.toFixed(2)}</p>
+        <p class="text-center">20%<br>$${suggestedTipHigh.toFixed(2)}</p>
+    </div>
 `
 
 ///////////////////////////////////////////////////////////////////////
